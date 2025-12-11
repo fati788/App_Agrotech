@@ -109,6 +109,7 @@
                class="flex-1 bg-gray-200 text-gray-800 py-3 text-lg rounded-lg font-semibold shadow-md
                               hover:bg-gray-300 transition-colors duration-200 text-center">
                 Volver
+
             </a>
         </div>
     </main>
