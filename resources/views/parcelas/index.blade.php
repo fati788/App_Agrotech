@@ -95,10 +95,8 @@
                                         </svg>
                                     </a>
                                 </div>
-
-
-
                         </tr>
+
                     @endforeach
                     </tbody>
                 </table>
