@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Agrotech</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -22,7 +22,7 @@
 <body class="min-h-screen w-full bg-[url('/storage/images/textura_agricola.png')] bg-cover bg-center bg-fixed">
 
 <!-- Degradado verde suave -->
-<div class="min-h-screen bg-gradient-to-b from-green-50/70 to-green-100/70 backdrop-blur-sm">
+<div class="min-h-screen bg-gradient-to-b from-green-50/70 to-green-100/70 backdrop-blur-sm " >
 
     <!-- HEADER -->
     <header class="w-full mx-auto max-w-[335px] lg:max-w-5xl text-sm py-5 mb-8">

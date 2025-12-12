@@ -12,66 +12,44 @@
                 @csrf
                 @method('PUT')
 
-                <!-- Nombre -->
                 <div>
                     <label class="block text-base font-semibold text-gray-700 mb-2">
                         Nombre de la finca
                     </label>
-                    <input
-                        type="text"
-                        name="nombre"
-                        value="{{ old('nombre', $finca->nombre) }}"
-                        required
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm
-                            focus:ring-2 focus:ring-green-500 focus:outline-none"
-                    />
+                    <input type="text" name="nombre" value="{{ old('nombre', $finca->nombre) }}" required
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:outline-none"/>
                 </div>
 
-                <!-- Ubicación -->
                 <div>
                     <label class="block text-base font-semibold text-gray-700 mb-2">
                         Ubicación
                     </label>
-                    <input
-                        type="text"
-                        name="ubicacion"
-                        value="{{ old('ubicacion', $finca->ubicacion) }}"
-                        required
+                    <input type="text" name="ubicacion" value="{{ old('ubicacion', $finca->ubicacion) }}" required
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm
                             focus:ring-2 focus:ring-green-500 focus:outline-none"
                     />
                 </div>
 
-                <!-- Hectáreas -->
                 <div>
                     <label class="block text-base font-semibold text-gray-700 mb-2">
                         Hectáreas Totales
                     </label>
-                    <input
-                        type="number"
-                        name="hectareasTotales"
-                        step="0.01"
-                        value="{{ old('hectareasTotales', $finca->hectareasTotales) }}"
-                        required
+                    <input type="number" name="hectareasTotales" step="0.01" value="{{ old('hectareasTotales', $finca->hectareasTotales) }}" required
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm
                             focus:ring-2 focus:ring-green-500 focus:outline-none"
                     />
                 </div>
 
-                <!-- Descripción -->
                 <div>
                     <label class="block text-base font-semibold text-gray-700 mb-2">
                         Descripción
                     </label>
-                    <textarea
-                        name="descripcion"
-                        rows="4"
+                    <textarea name="descripcion" rows="4"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm
                             focus:ring-2 focus:ring-green-500 focus:outline-none resize-none"
                     >{{ old('descripcion', $finca->descripcion) }}</textarea>
                 </div>
 
-                <!-- Botones Guardar y Volver -->
                 <div class="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
                     <button type="submit"
                             class="flex-1 bg-green-500 text-white py-3 text-lg rounded-lg font-semibold shadow-md

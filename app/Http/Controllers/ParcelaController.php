@@ -10,7 +10,9 @@ use Illuminate\Http\Request;
 class ParcelaController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
+     * Obtenir las parcelas de una finca
      */
     public function index($id)
     {
@@ -21,8 +23,11 @@ class ParcelaController extends Controller
         return view('parcelas.index', compact('finca', 'parcelas' , 'tipoCultivos'));
 
     }
+
     /**
-     * Show the form for creating a new resource.
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
+     * Nueva parcela dentro de una finca
      */
 
     public function new($id) {
@@ -34,7 +39,10 @@ class ParcelaController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     * Guardar los datos de la nueva parcela
      */
     public function guardar(Request $request , $id)
     {
@@ -45,6 +53,15 @@ class ParcelaController extends Controller
         $notas = $request->input('notas');
         $user = auth()->user();
         $finca = $user->fincas()->findOrFail($id);
+
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'hectareas' => 'required|numeric|min:0',
+            'tipo_cultivo_id' => 'required|exists:tipo_cultivos,id',
+            'fecha_siembra' => 'required|date',
+            'estado' => 'required|in:en_cultivo,en_descanso,preparacion',
+            'notas' => 'required|string'
+        ]);
         Parcela::create([
             'nombre' => $nombre,
             'finca_id' =>$finca->id ,
@@ -72,7 +89,10 @@ class ParcelaController extends Controller
 
 
     /**
-     * Show the form for editing the specified resource.
+     * @param $idFinca
+     * @param $idParcela
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
+     * Editar una parcela
      */
     public function edit($idFinca , $idParcela)
     {
@@ -84,7 +104,11 @@ class ParcelaController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @param Request $request
+     * @param $idFinca
+     * @param $idParcela
+     * @return \Illuminate\Http\RedirectResponse
+     * Guardar los cambios
      */
     public function update(Request $request,  $idFinca , $idParcela)
     {
@@ -96,6 +120,14 @@ class ParcelaController extends Controller
         $fecha_siembra = $request->input('fecha_siembra');
         $estado = $request->input('estado');
         $notas = $request->input('notas');
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'hectareas' => 'required|numeric|min:0',
+            'tipo_cultivo_id' => 'required|exists:tipo_cultivos,id',
+            'fecha_siembra' => 'required|date',
+            'estado' => 'required|in:en_cultivo,en_descanso,preparacion',
+            'notas' => 'required|string'
+        ]);
 
         $parcela->update([
             'nombre' => $nombre,
@@ -109,11 +141,74 @@ class ParcelaController extends Controller
       return redirect()->route('mis_parcelas',['finca'=>$finca->id]);
     }
 
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
+     * funcion para buscar
+     */
+    public function buscar(Request $request, $id)
+    {
+        $user = auth()->user();
+        $finca = $user->fincas()->findOrFail($id);
+        $texto = $request->input('texto');
+
+        if ($texto) {
+            $parcelas = $finca->parcelas()
+                ->where(function($q) use ($texto) {
+                    $q->where('nombre', 'like', "%$texto%")
+                        ->orWhere('estado', 'like', "%$texto%");
+                })
+                ->paginate(6)
+                ->appends(['texto' => $texto]);
+        } else {
+            $parcelas = $finca->parcelas()->paginate(6);
+        }
+
+        $tipoCultivos = TipoCultivo::all();
+        return view('parcelas.index', compact('finca', 'parcelas', 'tipoCultivos'));
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
+     * funcion para filtrar
+     */
+    public function filtrar(Request $request, $id)
+    {
+        $user = auth()->user();
+        $finca = $user->fincas()->findOrFail($id);
+
+        $tipo = $request->input('tipo_cultivo', 'todos');
+        $estado = $request->input('estado', 'todos');
+
+        if ($tipo == 'todos' && $estado == 'todos') {
+            $parcelas = $finca->parcelas()->paginate(6);
+        } elseif ($tipo == 'todos') {
+            $parcelas = $finca->parcelas()->where('estado', $estado)->paginate(6);
+        } elseif ($estado == 'todos') {
+            $parcelas = $finca->parcelas()->where('tipo_cultivo_id', $tipo)->paginate(6);
+        } else {
+            $parcelas = $finca->parcelas()
+                ->where('tipo_cultivo_id', $tipo)
+                ->where('estado', $estado)
+                ->paginate(6);
+        }
+
+        $tipoCultivos = TipoCultivo::all();
+        return view('parcelas.index', compact('finca', 'parcelas', 'tipoCultivos'));
+    }
+
 
 
     /////APIIII
     ///
-
+    /**
+     * @param $id
+     * @return mixed
+     * Obtener la lista de parcelas de una finca específica
+     */
     public function apiGetParcelas($id)
     {
 
@@ -148,6 +243,13 @@ class ParcelaController extends Controller
             'parcela' => $parcela
         ]);
     }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     * Actualizar una parcela (cambiar cultivo, estado, etc.)
+     */
     public function apiUpdateParcela(Request $request, $id)
     {
         $parcela = Parcela::findOrFail($id);
@@ -172,6 +274,13 @@ class ParcelaController extends Controller
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     * Asignar o cambiar el tipo de cultivo de una
+     * parcela
+     */
     public function apiCambiarCultivo(Request $request , $id)
     {
         $parcela = Parcela::findOrFail($id);
@@ -188,6 +297,12 @@ class ParcelaController extends Controller
             'parcela' => $parcela
         ]);
     }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     * Eliminar una parcela
+     */
 
     public function apiDeleteParcela($id)
     {

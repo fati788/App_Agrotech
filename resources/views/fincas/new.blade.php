@@ -22,7 +22,6 @@
                     </div>
                 @endif
 
-                <!-- Nombre -->
                 <div>
                     <label class="block text-base font-semibold text-gray-700 mb-2">
                         Nombre de la finca
@@ -37,8 +36,6 @@
                                focus:ring-2 focus:ring-green-500 focus:outline-none"
                     />
                 </div>
-
-                <!-- Ubicación -->
                 <div>
                     <label class="block text-base font-semibold text-gray-700 mb-2">
                         Ubicación
@@ -54,7 +51,6 @@
                     />
                 </div>
 
-                <!-- Hectáreas -->
                 <div>
                     <label class="block text-base font-semibold text-gray-700 mb-2">
                         Hectáreas Totales
@@ -71,7 +67,6 @@
                     />
                 </div>
 
-                <!-- Descripción -->
                 <div>
                     <label class="block text-base font-semibold text-gray-700 mb-2">
                         Descripción
@@ -85,12 +80,17 @@
                     >{{ old('descripcion') }}</textarea>
                 </div>
 
-                <!-- Botón crear -->
-                <button type="submit"
-                        class="w-full bg-green-500 text-white py-3 text-lg rounded-lg font-semibold shadow-md
-                               hover:bg-green-600 transition-colors duration-200">
-                    Crear Finca
-                </button>
+                <div class="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
+                    <button type="submit"
+                            class="flex-1 bg-green-500 text-white py-3 text-lg rounded-lg font-semibold shadow-md hover:bg-green-600 transition-colors duration-200">
+                        Crear Finca
+                    </button>
+
+                    <a href="{{route('mis_fincas')}}"
+                       class="flex-1 bg-gray-200 text-gray-800 py-3 text-lg rounded-lg font-semibold shadow-md hover:bg-gray-300 transition-colors duration-200 text-center">
+                        Volver
+                    </a>
+                </div>
             </form>
 
         </div>

@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 class FincaController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
+     * Index que devuelve las fincas del usuario logeado
      */
     public function index()
     {
@@ -19,7 +20,8 @@ class FincaController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
+     * Crear una nueva finca desde la vista
      */
 
     public function new() {
@@ -27,7 +29,9 @@ class FincaController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * Guardar la nueva finca
      */
     public function guardar(Request $request)
     {
@@ -35,6 +39,13 @@ class FincaController extends Controller
         $ubicacion = $request->input('ubicacion');
         $hectareasTotales = $request->input('hectareasTotales');
         $descripcion = $request->input('descripcion');
+
+        $request->validate([
+            'nombre' => 'required',
+            'ubicacion' => 'required',
+            'hectareasTotales' => 'required',
+            'descripcion' => 'required',
+        ]);
 
         Finca::create([
             'nombre' => $nombre,
@@ -47,7 +58,9 @@ class FincaController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @param string $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
+     * Ver las informaciones de una finca
      */
     public function show(string $id)
     {
@@ -56,7 +69,9 @@ class FincaController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * @param string $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
+     * Editar una finca
      */
     public function edit(string $id)
     {
@@ -65,7 +80,10 @@ class FincaController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @param Request $request
+     * @param string $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * Guardar los cambios
      */
     public function update(Request $request, string $id)
     {
@@ -84,12 +102,10 @@ class FincaController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     * Eliminar una finca
      */
-
-    /***
-     * Eliminar una Finca
-    */
     public function  eliminar($id)
     {
        $finca = Finca::findorfail($id);
@@ -99,11 +115,13 @@ class FincaController extends Controller
     }
 
 
-
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
+     * Resumen de fincas del usuario con estadísticas
+     */
     public function dashboard()
     {
         $user = auth()->user();
-
         $totalFincas = $user->fincas()->count();
         $hectareasTotales = $user->fincas()->sum('hectareasTotales');
         $totalParcelas = $user->fincas()->withCount('parcelas')->get()->sum('parcelas_count');
@@ -119,10 +137,22 @@ class FincaController extends Controller
 
 
     //////APIIIIIIII
+
+    /**
+     * @return mixed
+     * Obtener la lista de fincas del usuario autenticado
+     */
     public function apiGetFincas() {
         return Finca::where('user_id','=',auth()->id())->get()->toResourceCollection();
 
     }
+
+    /**
+     * @param $id
+     * @return void
+     * Obtener detalles de una finca específica (solo si pertenece al
+     * usuario)
+     */
     public function apiGetFincasById($id)
     {
         $finca = Finca::findOrFail($id);
@@ -132,6 +162,12 @@ class FincaController extends Controller
             abort(403); //Forbidden
         }
     }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     * Crear una nueva finca
+     */
     public function apiNewFinca(Request $request){
         $nombre = $request->input('nombre');
         $ubicacion = $request->input('ubicacion');
@@ -148,6 +184,13 @@ class FincaController extends Controller
       return $finca->toResource();
 
     }
+
+    /**
+     * @param $id
+     * @param Request $request
+     * @return mixed
+     * Actualizar una finca existente
+     */
 
     public function apiUpdateFinca($id , Request $request)
     {
@@ -169,6 +212,11 @@ class FincaController extends Controller
 
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     * Eliminar una finca
+     */
     public function apiDeleteFinca($id){
         $finca = Finca::findOrFail($id);
 

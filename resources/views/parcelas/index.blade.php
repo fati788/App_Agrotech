@@ -9,8 +9,74 @@
             <h1 class="mb-10 text-4xl font-extrabold  text-green-800  text-center">
                 MIS PARCELAS
             </h1>
+            <!-- Panel de búsqueda y filtros -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
 
-            <!--Crear Finca -->
+                <!-- Búsqueda -->
+                <div class="col-span-1 bg-white p-6 rounded-2xl shadow-md">
+                    <h2 class="text-xl font-semibold text-gray-700 mb-4 text-center">Buscar parcela</h2>
+
+                    <form action="{{ route('parcelas.buscar', ['finca' => $finca->id]) }}"
+                          method="GET" class="flex flex-col gap-4">
+                        <input type="text"
+                               name="texto"
+                               value="{{ request('texto') }}"
+                               placeholder="Ej: Parcela 1, Naranjo"
+                               class="w-full p-3 border rounded-lg bg-gray-50 focus:ring-2 focus:ring-green-400 focus:border-green-400">
+
+                        <button type="submit"
+                                class="w-full px-4 py-3 bg-green-500 text-white rounded-lg font-medium shadow hover:bg-green-600 transition-colors duration-200">
+                            Buscar
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Filtros -->
+                <div class="col-span-1 lg:col-span-2 bg-white p-6 rounded-2xl shadow-md">
+                    <h2 class="text-xl font-semibold text-gray-700 mb-4 text-center">Filtrar parcelas</h2>
+
+                    <form action="{{ route('parcelas.filtrar', ['finca' => $finca->id]) }}"
+                          method="GET" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+                        <!-- Tipo de cultivo -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-600 mb-1">Tipo de cultivo</label>
+                            <select name="tipo_cultivo"
+                                    class="w-full p-3 border rounded-lg bg-gray-50 focus:ring-2 focus:ring-green-400">
+
+                                <option value="todos">Todos</option>
+
+                                @foreach($tipoCultivos as $tipo)
+                                    <option value="{{ $tipo->id }}">{{ $tipo->nombre }}</option>
+                                @endforeach
+
+                            </select>
+                        </div>
+
+                        <!-- Estado -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-600 mb-1">Estado</label>
+                            <select name="estado"
+                                    class="w-full p-3 border rounded-lg bg-gray-50 focus:ring-2 focus:ring-green-400">
+
+                                <option value="todos">Todos</option>
+                                <option value="en_cultivo">En cultivo</option>
+                                <option value="en_descanso">En descanso</option>
+                                <option value="preparacion">Preparación</option>
+                            </select>
+                        </div>
+
+                        <div class="flex items-end">
+                            <button type="submit"
+                                    class="w-full px-4 py-3 bg-green-500 text-white rounded-lg font-medium shadow hover:bg-green-600 transition-colors duration-200">
+                                Filtrar
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
 
             <div class="mb-8">
                 <a href="{{route('parcelas.nueva' , ['finca' => $finca->id])}}"

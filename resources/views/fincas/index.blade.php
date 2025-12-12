@@ -16,6 +16,7 @@
                         Crear finca
                     </a>
                 </div>
+
                 <!-- TABLA -->
                 <div class="w-full overflow-x-auto rounded-lg border border-gray-200">
                     <table class="min-w-full bg-white text-sm">

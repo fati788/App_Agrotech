@@ -32,12 +32,17 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/fincas/{finca}/parcelas/{parcela}/eliminar', [ParcelaController::class, 'eliminar'])->name('parcelas.eliminar');
     Route::get('/fincas/{finca}/parcelas/{parcela}/editar', [ParcelaController::class, 'edit'])->name('parcelas.editar');
     Route::put('/fincas/{finca}/parcelas/{parcela}', [ParcelaController::class, 'update'])->name('parcelas.actualizar');
+    Route::get('/fincas/{finca}/parcelas/filtrar', [ParcelaController::class, 'filtrar'])->name('parcelas.filtrar');
+    Route::get('/fincas/{finca}/parcelas/buscar', [ParcelaController::class, 'buscar'])->name('parcelas.buscar');
+
+
 
     //Tipo Cultivo
 
     Route::get('/tipo_cultivos', [TipoCultivoController::class, 'index'])->name('tipo_cultivos');
     Route::get('/tipo_cultivos/filtrar', [TipoCultivoController::class, 'filtrar'])->name('tipo_cultivos.filtrar');
     Route::get('/tipo_cultivos/buscar', [TipoCultivoController::class, 'buscar'])->name('tipo_cultivos.buscar');
+
 
 });
 
