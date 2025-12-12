@@ -3,23 +3,20 @@
         Mis Fincas
     </x-slot>
 
-    <!-- CONTENEDOR RESPONSIVE GLOBAL -->
     <main class="w-full px-4 md:px-8">
         <div class="flex w-full max-w-6xl flex-col-reverse lg:flex-row gap-6 mx-auto mt-10">
 
-            <!-- CARD PRINCIPAL -->
             <div class="flex-1 p-4 sm:p-6 lg:p-12 bg-white rounded-xl shadow-lg w-full">
-                <h1 class="mb-6 text-xl sm:text-2xl font-bold text-gray-800">MIS FINCAS</h1>
+                <h1 class=" text-4xl font-extrabold  text-green-800 mb-10  text-center">MIS FINCAS</h1>
 
-                <!-- Botón Crear Finca -->
+                <!--  Crear Finca -->
                 <div class="mb-6">
                     <a href="{{route('fincas.nueva')}}"
                        class="inline-block px-4 py-2 sm:px-6 bg-green-500 text-white rounded-lg font-medium shadow hover:bg-green-600 transition">
                         Crear finca
                     </a>
                 </div>
-
-                <!-- TABLA SCROLL MOBILE -->
+                <!-- TABLA -->
                 <div class="w-full overflow-x-auto rounded-lg border border-gray-200">
                     <table class="min-w-full bg-white text-sm">
                         <thead class="text-xs sm:text-sm">
@@ -52,7 +49,6 @@
                                     {{$finca->descripcion}}
                                 </td>
 
-                                <!-- PARCELAS -->
                                 <td class="p-4 text-center">
                                     <div class="mb-1">
                                         <span class="text-lg sm:text-xl font-bold text-gray-800">
@@ -67,7 +63,6 @@
                                     </a>
                                 </td>
 
-                                <!-- ACCIONES -->
                                 <td class="px-4 sm:px-6 py-4 whitespace-nowrap flex gap-2 sm:gap-3 justify-center">
 
                                     <!-- Editar -->
@@ -109,6 +104,8 @@
 
                     </table>
                 </div>
+               <!--Paginacion-->
+
                 <div class="mt-6 flex justify-center">
 
                     {{ $fincas->links() }}
@@ -117,3 +114,4 @@
         </div>
     </main>
 </x-layout>
+

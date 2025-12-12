@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Parcela extends Model
 {
+    /** @use HasFactory<\Database\Factories\ParcelaFactory> */
+    use HasFactory;
 
     protected $fillable = ['nombre', 'finca_id', 'tipo_cultivo_id' , 'hectareas' , 'fecha_siembra' , 'estado' , 'notas'];
     public function finca(): BelongsTo

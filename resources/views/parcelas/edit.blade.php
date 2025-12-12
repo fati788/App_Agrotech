@@ -1,6 +1,6 @@
 <x-layout>
     <x-slot:title>
-        Editar Finca
+        Editar Parcela
     </x-slot>
 
     <main class="flex max-w-[335px] w-full flex-col-reverse lg:max-w-4xl lg:flex-row mx-auto mt-10">

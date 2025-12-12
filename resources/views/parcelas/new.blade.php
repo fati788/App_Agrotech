@@ -1,10 +1,10 @@
 <x-layout>
     <x-slot:title>
-        Crear Parcela en {{ $finca->nombre }}
+        Crear nueva Parcela
     </x-slot>
 
     <main class="max-w-3xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-lg">
-        <h1 class="text-2xl font-bold mb-6">Crear Parcela en {{ $finca->nombre }}</h1>
+        <h1 class="text-2xl font-bold mb-6 text-center">Crear Parcela en {{ $finca->nombre }}</h1>
 
         <!-- Mensajes de validación -->
         @if($errors->any())
@@ -20,21 +20,17 @@
         <form action="{{ route('parcelas.guardar', ['finca' => $finca->id]) }}" method="POST" class="space-y-4">
             @csrf
 
-            <!-- Nombre -->
             <div>
                 <label class="block text-sm font-medium text-gray-700">Nombre de la parcela</label>
                 <input type="text" name="nombre" value="{{ old('nombre') }}"
                        class="mt-1 block w-full border rounded-md p-2" placeholder="Ej: Parcela 1">
             </div>
 
-            <!-- Hectáreas -->
             <div>
                 <label class="block text-sm font-medium text-gray-700">Hectáreas</label>
                 <input type="number" step="0.01" name="hectareas" value="{{ old('hectareas') }}"
                        class="mt-1 block w-full border rounded-md p-2" placeholder="Ej: 2.5">
             </div>
-
-            <!-- Tipo de Cultivo -->
             <div>
                 <label class="block text-sm font-medium text-gray-700">Tipo de Cultivo</label>
                 <select name="tipo_cultivo_id" class="mt-1 block w-full border rounded-md p-2">
@@ -46,15 +42,11 @@
                     @endforeach
                 </select>
             </div>
-
-            <!-- Fecha de siembra -->
             <div>
                 <label class="block text-sm font-medium text-gray-700">Fecha de Siembra</label>
                 <input type="date" name="fecha_siembra" value="{{ old('fecha_siembra') }}"
                        class="mt-1 block w-full border rounded-md p-2">
             </div>
-
-            <!-- Estado -->
             <div>
                 <label class="block text-sm font-medium text-gray-700">Estado</label>
                 <select name="estado" class="mt-1 block w-full border rounded-md p-2">
@@ -63,19 +55,24 @@
                     <option value="preparacion" {{ old('estado') == 'preparacion' ? 'selected' : '' }}>Preparación</option>
                 </select>
             </div>
-
-            <!-- Notas -->
             <div>
                 <label class="block text-sm font-medium text-gray-700">Notas</label>
                 <textarea name="notas" class="mt-1 block w-full border rounded-md p-2" placeholder="Opcional">{{ old('notas') }}</textarea>
             </div>
 
-            <!-- Botón enviar -->
-            <div class="mt-6">
+            <div class="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
                 <button type="submit"
-                        class="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition">
+                        class="flex-1 bg-green-500 text-white py-3 text-lg rounded-lg font-semibold shadow-md
+                                   hover:bg-green-600 transition-colors duration-200">
                     Crear Parcela
                 </button>
+
+
+                <a href="{{ route('mis_parcelas' , ['finca' => $finca->id]) }}"
+                   class="flex-1 bg-gray-200 text-gray-800 py-3 text-lg rounded-lg font-semibold shadow-md
+                              hover:bg-gray-300 transition-colors duration-200 text-center">
+                    Volver
+                </a>
             </div>
         </form>
     </main>

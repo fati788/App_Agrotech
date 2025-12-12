@@ -107,14 +107,21 @@
 
         </main>
     </div>
-
-    <!-- FOOTER ELEGANTE -->
-    <footer class="w-full py-6 text-center text-green-700 text-sm border-t border-green-300 bg-white/50 backdrop-blur-sm mt-10">
-        © {{ date('Y') }} Agrotech — Sistema de Gestión de Fincas.
-        <span class="block text-[12px]">Innovación para el campo del futuro 🌱</span>
-    </footer>
-
 </div>
+<footer class="bg-green-600 text-white py-5 mt-10">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between text-center md:text-left">
+
+        <p class="text-base font-medium">
+            © {{ date('Y') }} Agrotech — Gestión de Fincas
+        </p>
+
+        <p class="text-base font-semibold mt-2 md:mt-0">
+            Desarrollado por Fatima · FP DAW
+        </p>
+
+    </div>
+</footer>
 </body>
+
 
 </html>

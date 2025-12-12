@@ -4,7 +4,7 @@
     </x-slot>
 
     <main class="max-w-7xl mx-auto mt-10 px-4 lg:px-0">
-        <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center lg:text-left">
+        <h1 class="text-3xl font-bold text-green-800 mb-10  text-center">
             Catálogo de Tipos de Cultivo
         </h1>
 
@@ -12,7 +12,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
             <!-- Búsqueda -->
             <div class="col-span-1 lg:col-span-1 bg-white p-6 rounded-2xl shadow-md">
-                <h2 class="text-xl font-semibold text-gray-700 mb-4">Buscar cultivo</h2>
+                <h2 class="text-xl font-semibold text-gray-700 mb-4 text-center">Buscar cultivo</h2>
                 <form action="{{ route('tipo_cultivos.buscar') }}" method="GET" class="flex flex-col gap-4">
                     <input type="text"
                            name="buscar"
@@ -28,7 +28,7 @@
 
             <!-- Filtros -->
             <div class="col-span-1 lg:col-span-2 bg-white p-6 rounded-2xl shadow-md">
-                <h2 class="text-xl font-semibold text-gray-700 mb-4">Filtrar cultivos</h2>
+                <h2 class="text-xl font-semibold text-gray-700 mb-4 text-center">Filtrar cultivos</h2>
                 <form action="{{ route('tipo_cultivos.filtrar') }}" method="GET" class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-600 mb-1">Familia</label>
