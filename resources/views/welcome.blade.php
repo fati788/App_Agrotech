@@ -100,7 +100,7 @@
                 <!-- Decoración agrícola lateral -->
                 <div class="absolute left-0 top-0 h-full w-2 bg-gradient-to-b from-green-500 to-green-300 rounded-l-xl"></div>
 
-                <img src="{{ asset('storage/images/fondo.jpg') }}"
+                <img src="{{$url}}" alt="#"
                      class="rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 w-full object-cover">
 
             </div>

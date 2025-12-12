@@ -4,10 +4,14 @@ use App\Http\Controllers\FincaController;
 use App\Http\Controllers\ParcelaController;
 use App\Http\Controllers\TipoCultivoController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+
 
 Route::get('/', function () {
-    return view('welcome');
+    $url = Storage::disk('s3')->url('fondo.jpg');
+    return view('welcome', compact('url'));
 });
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', [FincaController::class , 'dashboard'])->name('home');
     //Fincas
